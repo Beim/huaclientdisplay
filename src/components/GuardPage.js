@@ -61,7 +61,7 @@ class GuardPage extends Component {
         }
         let guardDivList = guardList.map((val, idx) => {
             return (
-                <div key={`guard-div-${idx}`}>
+                <div className={'gift-span-wrapper'} key={`guard-div-${idx}`}>
                     <img src={`http://ob4a6y748.bkt.clouddn.com/jiandui${idx+1}.png`} alt={`舰队${idx+1}`}/>
                     <span className={`gift-span`}>{val}</span>    
                 </div>
