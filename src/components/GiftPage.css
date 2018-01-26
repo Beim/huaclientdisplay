@@ -24,3 +24,8 @@
 .gift-span {
     margin-left: 15px;
 }
+
+.gift-span-wrapper {
+    display: flex;
+    align-items: center;
+}

@@ -79,7 +79,7 @@ class GiftPage extends Component {
         let giftDivList = giftData.map((val, idx) => {
             let iconId = giftConfig[val.gift_name]
             return (
-                <div key={`span-div-${idx}`}>
+                <div className={'gift-span-wrapper'} key={`span-div-${idx}`}>
                     <img src={`https://s1.hdslb.com/bfs/static/blive/blfe-live-room/static/img/gift-images/image-png/gift-${iconId}.png`}  alt={val.gift_name} />
                     <span className={`gift-span ${val.count >= val.goal ? 'heartbeat' : ''}`}>{val.count}/{val.goal}</span>    
                     <span className={`gift-span ${val.count >= val.goal ? 'heartbeat' : ''}`}>{val.reward}</span>
