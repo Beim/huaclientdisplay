@@ -5,6 +5,7 @@ import './App.css';
 
 import GiftPage from './components/GiftPage.js'
 import GuardPage from './components/GuardPage.js'
+import GiftPage1 from './components/GiftPage1.js'
 
 class App extends Component {
   render() {
@@ -13,11 +14,9 @@ class App extends Component {
         <div className="App">
           <Route path="/gift" component={GiftPage}></Route>
           <Route path="/guard" component={GuardPage}></Route>
+          <Route path="/gift1" component={GiftPage1}></Route>
         </div>
       </Router>
-      // <div style={{color: 'red'}}>
-      //   hello huahua
-      // </div>
     );
   }
 }
