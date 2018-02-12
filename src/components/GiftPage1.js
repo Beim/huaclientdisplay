@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './GiftPage.css';
+import './GiftPage1.css';
 import { config } from '../config.js'
 import { httpget } from '../util.js'
 import Progress from './Progress.js'
@@ -8,22 +8,19 @@ class GiftDiv extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-
-        }
     }
 
     render() {
         return (
             <div style={{display: 'flex'}}>
-                <div style={{height: '100', width: '100'}}>
-                    <img src="https://s1.hdslb.com/bfs/static/blive/blfe-live-room/static/img/gift-images/image-png/gift-6.png"></img>
+                <div style={{height: '100', width: '100', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <img style={{height: '85', width: '85'}} src={`https://s1.hdslb.com/bfs/static/blive/blfe-live-room/static/img/gift-images/image-png/gift-${this.props['iconId']}.png`}></img>
                 </div>
-                <div style={{height: '100'}}>
-                    <div>1</div>
-                    <div>2</div>
-                    <div style={{width: '300'}}>
-                        <Progress nums={10} index={10} progressColor='#dabb84' />
+                <div style={{height: '100', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <div className='hua-text1' style={{margin: '1px'}}>赠送：{this.props['gift_name']}</div>
+                    <div className='hua-text1' style={{margin: '1px'}}>许愿：{this.props['reward']}</div>
+                    <div style={{width: '150', margin: '1px'}}>
+                        <Progress nums={this.props['goal']} index={this.props['count']} progressColor='#23ade5' backColor='#d0d0d0' textColor='#d0d0d0' />
                     </div>
                 </div>
             </div>
@@ -40,33 +37,56 @@ class GiftPage1 extends Component {
             giftConfig: {},
             data: [],
             dataTimer: null,
-            textStyle: {},
         }
     }
 
     async componentDidMount() {
-        // await this.setGiftConfig()
-        // await this.setDataState()
-        // let dataTimer = setInterval(this.setDataState.bind(this), 2000)
-        // this.setState({dataTimer})
+        await this.setGiftConfig()
+        await this.setDataState()
+        let dataTimer = setInterval(this.setDataState.bind(this), 2000)
+        this.setState({dataTimer})
     }
 
     componentWillUnmount() {
-        // clearInterval(this.state.dataTimer)
-        // this.setState({dataTimer: null})
+        clearInterval(this.state.dataTimer)
+        this.setState({dataTimer: null})
+    }
+
+    async setGiftConfig() {
+        let ret = await httpget(`http://${config.host}:${config.port}/api/get/giftconfig`)
+        if (ret && ret.ok === 1) {
+            let giftConfig = {}
+            ret.data.forEach((val) => {
+                giftConfig[val.name] = val.icon_id
+            })
+            this.setState({giftConfig})
+        }
+        else {
+            console.log('err: ', ret)
+        }
+    }
+
+    async setDataState() {
+        let ret = await httpget(`http://${config.host}:${config.port}/api/get`)
+        if (ret && ret.ok === 1) {
+            let data = ret.data
+            this.setState({data})
+        }
+        else {
+            console.log('err: ', ret)
+        }
     }
 
     genGiftDivList() {
-        return (
-            <GiftDiv></GiftDiv>
-        )
+        return this.state.data.map((value, index) => {
+            return <GiftDiv gift_name={value['gift_name']} reward={value['reward']} goal={value['goal']} count={value['count']} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
+        })
     }
 
     render() {
         return (
             <div style={this.state.textStyle}>
                 {this.genGiftDivList()}
-                {/* <Progress nums={10} index={2} progressColor='#dabb84' /> */}
             </div>
         )
     }

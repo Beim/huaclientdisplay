@@ -1,0 +1,8 @@
+.hua-text1 {
+    /* padding: 40px; */
+    /* font-size: 300%; */
+    font-family: "Microsoft YaHei" ! important;  
+    color: #23ade5;
+    font-weight:900;
+    text-shadow:#00f 1px 0 1px,#00f 0 1px 1px,#00f -1px 0 1px,#00f 0 -1px 1px; 
+}

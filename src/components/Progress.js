@@ -8,49 +8,42 @@ export default class Progress extends Component {
    }
 
    renderProgress () {
-        const progressItemStyle = {
-            height: '100%'
-        };
-        const ele = [];
-        const width1 = `${this.props.index / this.props.nums * 100}%`
-        const width2 = `${(1 - this.props.index / this.props.nums) * 100}%`
-        progressItemStyle.width = width1
-        ele.push(
-            <div style={Object.assign({backgroundColor: this.props.progressColor}, progressItemStyle)} key={'progressBlock1'}></div>
-        )
-        progressItemStyle.width = width2
-        ele.push(
-            <div style={progressItemStyle} key={'progressBlock2'}></div>
-        )
-        return ele;
+        const progressItemStyle1 = {
+            height: '100%',
+            width: `${this.props.index / this.props.nums * 100}%`,
+            backgroundColor: this.props.progressColor,
+        }
+        const progressItemStyle2 = {
+            height: '100%',
+            width: `${(1 - this.props.index / this.props.nums) * 100}%`,
+            backgroundColor: this.props.backColor
+        }
+        return [
+            <div style={progressItemStyle1} key={'progressBlock1'}></div>,
+            <div style={progressItemStyle2} key={'progressBlock2'}></div>
+        ]
    }
 
    render() {
 
-       const progressStyle = {
-           display: '-webkit-flex',
-           color: this.props.progressColor,
-       };
-
        const progressArticleStyle = {
-           height: 10,
-           border: '1px solid #dabb84',
-           width: '75%',
-           display: '-webkit-flex',
-           borderRadius: 2,
-           overflow: 'hidden',
-           marginTop: 3
-       };
+            height: 10,
+            border: `1px solid ${this.props.backColor}`,
+            width: '75%',
+            display: '-webkit-flex',
+            borderRadius: 2,
+            overflow: 'hidden',
+            marginTop: 3
+        };
 
        return (
-           <div style={progressStyle}>
+           <div style={{display: '-webkit-flex'}}>
                <div style={progressArticleStyle}>
                    {this.renderProgress()}
                </div>
-               <div style={{width: '25%', marginLeft: '3px'}}>
+               <div style={{width: '25%', marginLeft: '3px', color: this.props.textColor}}>
                    {this.props.index}/{this.props.nums}
                </div>
-               
            </div>
        )
    }
@@ -59,5 +52,7 @@ export default class Progress extends Component {
 Progress.propTypes = {
    nums: PropTypes.number.isRequired,
    index: PropTypes.number.isRequired,
-   progressColor: PropTypes.string.isRequired
+   progressColor: PropTypes.string.isRequired,
+   backColor: PropTypes.string.isRequired,
+   textColor: PropTypes.string.isRequired,
 };
