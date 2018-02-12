@@ -79,8 +79,8 @@ class GiftPage1 extends Component {
 
     genGiftDivList() {
         return this.state.data.map((value, index) => {
-            // return <GiftDiv key={`giftdiv${index}`} gift_name={value['gift_name']} reward={value['reward']} goal={value['goal']} count={value['count']} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
-            return <GiftDiv key={`giftdiv${index}`} gift_name={value['gift_name']} reward={value['reward']} goal={10} count={3} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
+            return <GiftDiv key={`giftdiv${index}`} gift_name={value['gift_name']} reward={value['reward']} goal={value['goal']} count={value['count']} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
+            // return <GiftDiv key={`giftdiv${index}`} gift_name={value['gift_name']} reward={value['reward']} goal={10} count={3} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
         })
     }
 
