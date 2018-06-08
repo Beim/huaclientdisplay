@@ -12,12 +12,10 @@ class GiftPage extends Component {
             data: [],
             dataTimer: null,
             textStyle: {},
-            giftImgUrl: {},
         }
     }
 
     async componentDidMount() {
-        await this.setGiftImgUrl()
         await this.setGiftConfig()
         await this.setDataState()
         await this.setTextStyle()
@@ -33,26 +31,15 @@ class GiftPage extends Component {
         this.setState({dataTimer: null})
     }
 
-    async setGiftImgUrl() {
-        let ret = await httpget(`http://api.live.bilibili.com/gift/v3/live/gift_config`)
-        if (ret && ret.code === 0) {
-            let giftImgUrl = {}
-            for (let item of ret.data) {
-                giftImgUrl[item.id] = item.img_basic
-            }
-            this.setState({giftImgUrl})
-        }
-        else {
-            console.log('err: ', ret)
-        }
-    }
-
     async setGiftConfig() {
         let ret = await httpget(`http://${config.host}:${config.port}/api/get/giftconfig`)
         if (ret && ret.ok === 1) {
             let giftConfig = {}
             ret.data.forEach((val) => {
-                giftConfig[val.name] = val.icon_id
+                giftConfig[val.name] = {
+                    'icon_id': val.icon_id,
+                    'img_basic': val.img_basic,
+                }
             })
             this.setState({giftConfig})
         }
@@ -90,12 +77,13 @@ class GiftPage extends Component {
     }
 
     genGiftDivList() {
-        let giftImgUrl = this.state.giftImgUrl
         let giftData = this.state.data
         let giftConfig = this.state.giftConfig
         let giftDivList = giftData.map((val, idx) => {
-            let iconId = giftConfig[val.gift_name]
-            let imgUrl = giftImgUrl[iconId] || `https://s1.hdslb.com/bfs/static/blive/blfe-live-room/static/img/gift-images/image-png/gift-${iconId}.png`
+            console.log(giftConfig)
+            console.log(val)
+            let iconId = giftConfig[val.gift_name]['icon_id']
+            let imgUrl = giftConfig[val.gift_name]['img_basic']
             return (
                 <div className={'gift-span-wrapper'} key={`span-div-${idx}`}>
                     <img src={imgUrl}  alt={val.gift_name} />
