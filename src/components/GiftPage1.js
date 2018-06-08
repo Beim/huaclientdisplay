@@ -14,7 +14,7 @@ class GiftDiv extends Component {
         return (
             <div style={{display: 'flex'}}>
                 <div style={{height: '100px', width: '100px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <img style={{height: '85px', width: '85px'}} src={`https://s1.hdslb.com/bfs/static/blive/blfe-live-room/static/img/gift-images/image-png/gift-${this.props['iconId']}.png`}></img>
+                    <img style={{height: '85px', width: '85px'}} src={this.props['imgUrl']}></img>
                 </div>
                 <div style={{height: '100px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                     <div className='hua-text1' style={{margin: '2px'}}>赠送：{this.props['gift_name']}</div>
@@ -57,7 +57,10 @@ class GiftPage1 extends Component {
         if (ret && ret.ok === 1) {
             let giftConfig = {}
             ret.data.forEach((val) => {
-                giftConfig[val.name] = val.icon_id
+                giftConfig[val.name] = {
+                    'icon_id': val.icon_id,
+                    'img_basic': val.img_basic,
+                }
             })
             this.setState({giftConfig})
         }
@@ -79,7 +82,15 @@ class GiftPage1 extends Component {
 
     genGiftDivList() {
         return this.state.data.map((value, index) => {
-            return <GiftDiv key={`giftdiv${index}`} gift_name={value['gift_name']} reward={value['reward']} goal={value['goal']} count={value['count']} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
+            return <GiftDiv 
+                        key={`giftdiv${index}`} 
+                        gift_name={value['gift_name']} 
+                        reward={value['reward']} 
+                        goal={value['goal']} 
+                        count={value['count']} 
+                        imgUrl={this.state.giftConfig[value['gift_name']]['img_basic']}
+                        >
+                    </GiftDiv>
             // return <GiftDiv key={`giftdiv${index}`} gift_name={value['gift_name']} reward={value['reward']} goal={10} count={3} iconId={this.state.giftConfig[value['gift_name']]}></GiftDiv>
         })
     }
