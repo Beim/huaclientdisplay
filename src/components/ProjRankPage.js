@@ -54,44 +54,51 @@ class ProjRankPage extends Component {
         const onlist = this.state.onlist
         const projSpanWrapperStyle = {
             fontSize: '30px',
-            marginTop: '20px',
+            marginTop: '50px',
         }
-        const projFisrtSpanWrapperStyle = {
-            fontSize: '50px',
-            marginTop: '20px',
-        }
+        // const projFisrtSpanWrapperStyle = {
+        //     fontSize: '50px',
+        //     marginTop: '20px',
+        // }
         if (onlist.length === 0) {
             return (
-                <div style={projFisrtSpanWrapperStyle}>
-                    {/* <span className="proj-span">无项目</span> */}
+                <div style={projSpanWrapperStyle}>
+                    咸鱼现在什么都不想干
                 </div>
             )
         }
         else if (onlist.length === 1) {
             return (
                 <div>
-                    <div style={projFisrtSpanWrapperStyle}>
+                    <div style={projSpanWrapperStyle}>
+                        <span>进行中：</span>
                         <span className="proj-span">{onlist[0].name}</span>
                         <span className="proj-span">{parseS2M(onlist[0].duration)}</span>
+                    </div>
+                    <div style={projSpanWrapperStyle}>
+                        <span>下一个：下面没有了</span>
                     </div>
                 </div>
             )
         }
         else {
             let divList = []
-            const maxIdx = 2
-            for (let idx in onlist) {
-                idx = parseInt(idx)
-                if (idx >= maxIdx) break
-                let item = onlist[idx]
-                let style = idx === 0 ? projFisrtSpanWrapperStyle : projSpanWrapperStyle
-                divList.push(
-                    <div style={style}>
-                        <span className="proj-span">{item.name}</span>
-                        <span className="proj-span">{parseS2M(item.duration)}</span>
-                    </div>
-                )
-            }
+            let item = onlist[0]
+            divList.push(
+                <div style={projSpanWrapperStyle}>
+                    <span>进行中：</span>
+                    <span className="proj-span">{item.name}</span>
+                    <span className="proj-span">{parseS2M(item.duration)}</span>
+                </div>
+            )
+            item = onlist[1]
+            divList.push(
+                <div style={projSpanWrapperStyle}>
+                    <span>下一个：</span>
+                    <span className="proj-span">{item.name}</span>
+                    <span className="proj-span">{parseS2M(item.duration)}</span>
+                </div>
+            )
             return (
                 <div>
                     {divList}
