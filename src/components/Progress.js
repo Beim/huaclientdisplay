@@ -53,7 +53,7 @@ export default class Progress extends Component {
        const progressArticleStyle = {
             height: 17,
             // border: `1px solid ${this.props.backColor}`,
-            width: '100%',
+            width: '100px',
             display: '-webkit-flex',
             borderRadius: 2,
             overflow: 'hidden',

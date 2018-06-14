@@ -19,7 +19,7 @@ class GiftDiv extends Component {
                 <div style={{height: '100px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                     <div className='hua-text1' style={{margin: '2px'}}>赠送：{this.props['gift_name']}</div>
                     <div className='hua-text1' style={{margin: '2px'}}>许愿：{this.props['reward']}</div>
-                    <div style={{width: '140px', margin: '2px'}}>
+                    <div style={{margin: '2px'}}>
                         <Progress nums={this.props['goal']} index={this.props['count']} progressColor='#23ade5' backColor='#d0d0d0' textColor='#ffc09f' />
                     </div>
                 </div>
